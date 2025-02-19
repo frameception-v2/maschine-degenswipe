@@ -52,13 +52,23 @@ export default function Frame() {
     } catch (error) {
       if (error instanceof AddFrame.RejectedByUser) {
         setAddFrameResult(`Not added: ${error.message}`);
-      }
-
-      if (error instanceof AddFrame.InvalidDomainManifest) {
+        // Show red hat toast for user rejection
+        toast.error(`🎩 Frame not added: ${error.message}`);
+      } else if (error instanceof AddFrame.InvalidDomainManifest) {
         setAddFrameResult(`Not added: ${error.message}`);
+        // Show error with degen mascot
+        toast.error(`🎩 Invalid configuration: ${error.message}`);
+      } else if (error instanceof Error) {
+        setAddFrameResult(`Error: ${error.message}`);
+        // Show purple spinner with retry option
+        toast.error(`🎩 Temporary error - retrying...`, {
+          duration: 5000,
+          action: {
+            label: 'Retry',
+            onClick: () => addFrame()
+          }
+        });
       }
-
-      setAddFrameResult(`Error: ${error}`);
     }
   }, []);
 

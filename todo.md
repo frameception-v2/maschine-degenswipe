@@ -2,10 +2,21 @@
 
 ## Functional User Requirements
 1. Backwards-compatible power badge endpoint with FID list
+   - [ ] Implement PowerUserService
+   - [ ] Add Warpcast-compatible response format
 2. Follower lookup with privacy-aware filtering
+   - [ ] Implement SocialGraphService
+   - [ ] Add privacy filters
 3. [x] Dark purple (#2A0944) visual theme with 🎩 emoji accents
+   - [x] Applied to Frame component
+   - [x] Defined in constants
+   - [x] Used in OpenGraph image
 4. Seasonal tip tracking integration
+   - [ ] Design database schema
+   - [ ] Create API endpoints
 5. Wallet-based verification systems
+   - [ ] Integrate with Frame SDK wallet
+   - [ ] Add verification flow
 
 ## Architecture Diagram
 ```mermaid

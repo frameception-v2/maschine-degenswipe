@@ -95,8 +95,9 @@ export default async function Image() {
   const BACKGROUND_GRADIENT_START = "#2A0944";
   const BACKGROUND_GRADIENT_END = "#3B185F";
   const BACKGROUND_GRADIENT_STYLE = {
-    backgroundImage: `linear-gradient(to bottom, ${BACKGROUND_GRADIENT_START}, ${BACKGROUND_GRADIENT_END})`,
+    backgroundImage: `linear-gradient(45deg, ${BACKGROUND_GRADIENT_START}, ${BACKGROUND_GRADIENT_END})`,
     color: "white",
+    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
   };
 
   debugLog("Generating image response");
