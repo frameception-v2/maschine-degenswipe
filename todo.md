@@ -3,7 +3,7 @@
 ## Functional User Requirements
 1. Backwards-compatible power badge endpoint with FID list
 2. Follower lookup with privacy-aware filtering
-3. Dark purple (#2A0944) visual theme with 🎩 emoji accents
+3. [x] Dark purple (#2A0944) visual theme with 🎩 emoji accents
 4. Seasonal tip tracking integration
 5. Wallet-based verification systems
 

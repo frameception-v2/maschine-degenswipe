@@ -136,8 +136,8 @@ export default function Frame() {
         paddingRight: context?.client.safeAreaInsets?.right ?? 0,
       }}
     >
-      <div className="w-[300px] mx-auto py-2 px-2">
-        <h1 className="text-2xl font-bold text-center mb-4 text-gray-700 dark:text-gray-300">
+      <div className="w-[300px] mx-auto py-2 px-2" style={{backgroundColor: "#2A0944"}}>
+        <h1 className="text-2xl font-bold text-center mb-4 text-white">
           {PROJECT_TITLE}
         </h1>
         <ExampleCard />
