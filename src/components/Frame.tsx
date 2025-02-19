@@ -6,6 +6,7 @@ import sdk, {
   SignIn as SignInCore,
   type Context,
 } from "@farcaster/frame-sdk";
+import { toast } from "~/components/ui/use-toast";
 import {
   Card,
   CardHeader,
@@ -52,17 +53,24 @@ export default function Frame() {
     } catch (error) {
       if (error instanceof AddFrame.RejectedByUser) {
         setAddFrameResult(`Not added: ${error.message}`);
-        // Show red hat toast for user rejection
-        toast.error(`🎩 Frame not added: ${error.message}`);
+        toast({
+          variant: "destructive",
+          title: "🎩 Frame not added",
+          description: error.message
+        });
       } else if (error instanceof AddFrame.InvalidDomainManifest) {
         setAddFrameResult(`Not added: ${error.message}`);
-        // Show error with degen mascot
-        toast.error(`🎩 Invalid configuration: ${error.message}`);
+        toast({
+          variant: "destructive",
+          title: "🎩 Invalid configuration",
+          description: error.message
+        });
       } else if (error instanceof Error) {
         setAddFrameResult(`Error: ${error.message}`);
-        // Show purple spinner with retry option
-        toast.error(`🎩 Temporary error - retrying...`, {
-          duration: 5000,
+        toast({
+          variant: "destructive",
+          title: "🎩 Temporary error",
+          description: error.message,
           action: {
             label: 'Retry',
             onClick: () => addFrame()
