@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useCallback, useState } from "react";
+import { useEffect, useCallback, useState, FormEvent } from "react";
 import sdk, {
   AddFrame,
   SignIn as SignInCore,
@@ -51,6 +51,31 @@ function TipsCard() {
 export default function Frame() {
   const [isSDKLoaded, setIsSDKLoaded] = useState(false);
   const [context, setContext] = useState<Context.FrameContext>();
+  const [fid, setFid] = useState('');
+  const [degenStats, setDegenStats] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchDegenStats = async (e: FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+    
+    try {
+      const response = await fetch(`/api/degen-stats?fid=${fid}`);
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to fetch stats');
+      }
+      
+      setDegenStats(data);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An error occurred');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const [added, setAdded] = useState(false);
 
@@ -167,6 +192,68 @@ export default function Frame() {
         <h1 className="text-2xl font-bold text-center mb-4 text-white">
           {PROJECT_TITLE}
         </h1>
+
+        <form onSubmit={fetchDegenStats} className="mb-4">
+          <div className="flex gap-2">
+            <input
+              type="number"
+              value={fid}
+              onChange={(e) => setFid(e.target.value)}
+              placeholder="Enter FID"
+              className="flex-1 px-3 py-2 rounded bg-[#3B185F] text-white border border-purple-300 placeholder-purple-200"
+            />
+            <button 
+              type="submit"
+              className="px-4 py-2 bg-purple-500 text-white rounded hover:bg-purple-600 disabled:opacity-50"
+              disabled={loading || !fid}
+            >
+              {loading ? '...' : 'Look up'}
+            </button>
+          </div>
+        </form>
+
+        {error && (
+          <div className="mb-4 p-3 bg-red-500/20 border border-red-500 rounded text-white">
+            {error}
+          </div>
+        )}
+
+        {degenStats && (
+          <Card className="mb-4 bg-[#3B185F] text-white border-none">
+            <CardHeader>
+              <CardTitle>🎩 Degen Stats</CardTitle>
+              <CardDescription className="text-purple-200">
+                Points and allowances for FID {fid}
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {degenStats.season1 && (
+                  <div>
+                    <h3 className="font-semibold mb-1">Season 1 Points</h3>
+                    <p className="text-2xl text-purple-200">{degenStats.season1.points}</p>
+                  </div>
+                )}
+                {degenStats.season2 && (
+                  <div>
+                    <h3 className="font-semibold mb-1">Season 2 Points</h3>
+                    <p className="text-2xl text-purple-200">{degenStats.season2.points}</p>
+                  </div>
+                )}
+                {degenStats.allowances && (
+                  <div>
+                    <h3 className="font-semibold mb-1">Current Allowance</h3>
+                    <p className="text-2xl text-purple-200">
+                      {degenStats.allowances.remaining_tip_allowance} / {degenStats.allowances.tip_allowance}
+                    </p>
+                    <p className="text-sm text-purple-300">Rank: #{degenStats.allowances.user_rank}</p>
+                  </div>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
         <TipsCard />
       </div>
     </div>
