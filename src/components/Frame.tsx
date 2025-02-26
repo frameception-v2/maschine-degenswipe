@@ -6,7 +6,7 @@ import sdk, {
   SignIn as SignInCore,
   type Context,
 } from "@farcaster/frame-sdk";
-import { toast } from "~/components/ui/use-toast";
+import { toast } from "../components/ui/use-toast";
 import {
   Card,
   CardHeader,
