@@ -29,7 +29,7 @@ function TipsCard() {
   return (
     <Card className="bg-[#3B185F] text-white border-none">
       <CardHeader>
-        <CardTitle>🎩 Today's Degen Wisdom</CardTitle>
+        <CardTitle>🎩 Today&apos;s Degen Wisdom</CardTitle>
         <CardDescription className="text-purple-200">
           Curated tips from the purple realm
         </CardDescription>
