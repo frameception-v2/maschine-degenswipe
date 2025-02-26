@@ -23,17 +23,26 @@ import { createStore } from "mipd";
 import { Label } from "~/components/ui/label";
 import { PROJECT_TITLE } from "~/lib/constants";
 
-function ExampleCard() {
+import { DEGEN_TIPS } from "~/lib/tips-data";
+
+function TipsCard() {
   return (
-    <Card>
+    <Card className="bg-[#3B185F] text-white border-none">
       <CardHeader>
-        <CardTitle>Welcome to the Frame Template</CardTitle>
-        <CardDescription>
-          This is an example card that you can customize or remove
+        <CardTitle>🎩 Today's Degen Wisdom</CardTitle>
+        <CardDescription className="text-purple-200">
+          Curated tips from the purple realm
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <Label>Place content in a Card here.</Label>
+        <div className="space-y-4">
+          {DEGEN_TIPS.map((tip) => (
+            <div key={tip.fid} className="border-l-2 border-purple-300 pl-3">
+              <p className="text-sm font-semibold text-purple-200">@{tip.username}</p>
+              <p className="text-white">{tip.tip}</p>
+            </div>
+          ))}
+        </div>
       </CardContent>
     </Card>
   );
@@ -158,7 +167,7 @@ export default function Frame() {
         <h1 className="text-2xl font-bold text-center mb-4 text-white">
           {PROJECT_TITLE}
         </h1>
-        <ExampleCard />
+        <TipsCard />
       </div>
     </div>
   );
